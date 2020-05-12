@@ -11,7 +11,7 @@ const formSchema = yup.object().shape({
 });
 
 
-export default function Form() {
+const Form = props => {
 
     const [formState, setFormState] = useState({
         name: "",
@@ -27,6 +27,14 @@ export default function Form() {
         terms: ""
     });
 
+
+    const [user, setUser] = useState([
+        {
+        id: "",
+        name: "",
+        email: ""
+        }
+      ])
 
 
     const validate = e => {
@@ -58,6 +66,8 @@ export default function Form() {
     const formSubmit = e => {
         e.preventDefault();
         console.log("form submitted!")
+        props.addUser(user);
+        setUser({name: "", email: ""});
 
         axios
             .post("https://reqres.in/api/users", formState)
@@ -115,3 +125,5 @@ export default function Form() {
 
 
 }
+
+export default Form;
