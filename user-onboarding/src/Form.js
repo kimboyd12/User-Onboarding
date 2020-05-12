@@ -27,6 +27,8 @@ export default function Form() {
         terms: ""
     });
 
+
+
     const validate = e => {
         yup 
             .reach(formSchema, e.target.name)
