@@ -1,5 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+html {
+  background-color: #C1A3CB ;
+  font-family: 'Montserrat';
+}
+
 .App {
   text-align: center;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .App-logo {
@@ -35,4 +44,87 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+h1 {
+  margin-bottom: 6%;
+  padding-left: 2%;
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 3%;
+  font-size: 2.4rem;
+}
+
+h4 {
+  padding-left: 1%;
+  font-size: 1.6rem;
+  margin-bottom: 0%;
+}
+
+p {
+  margin-bottom: 5%;
+  padding-left: 2%;
+  font-size: 1.1rem;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 300px;
+  margin: 0 auto;
+
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 10px 0;
+  font-size: 1.2rem;
+
+}
+
+input {
+  width: 100%;
+  margin: 5px 0 0;
+  display: block;
+  width: 100%;
+  border: 2px solid #534757;
+  border-radius: 5px;
+  padding: 10px;
+  transition: all 0.3s;
+  font-size: 1.4rem;
+  letter-spacing: 0.5px;
+  background-color: white;
+}
+
+.terms {
+  font-size: 0.9rem;
+  margin: 0 auto;
+  align-items: center;
+  padding: 8%;
+}
+
+.terms input {
+  width: 20px;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+button {
+  width: 150px;
+  padding: 8px 11px;
+  font-size: .9rem;
+  text-transform: uppercase;
+  margin: 0 auto;
+  border-radius: 5px;
+  margin-bottom: 15%;
+  border: 3px solid #534757;
+}
+
+.error {
+  color: red;
+  font-size: .9rem;
+  margin: 0 auto;
+  padding-top: 2%;
 }

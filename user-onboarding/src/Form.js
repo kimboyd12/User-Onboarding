@@ -6,7 +6,7 @@ import axios from "axios";
 const formSchema = yup.object().shape({
     name: yup.string().required("Please enter your name"),
     email: yup.string().email("Must be a valid email address").required("Please enter your email address"),
-    password: yup.string().required("Please enter your password").min(8, "Password must be at least 8 characters"),
+    password: yup.string().required("Please enter your password"),
     terms: yup.boolean().oneOf([true], "Please agree to the Terms and Conditions")
 });
 
@@ -62,6 +62,7 @@ export default function Form() {
             .then((response) => {
                 setUsers([...users, response.data]);
                 setFormState(initialState);
+                console.log(response);
     
             })
             .catch((err) => console.log(err.response));
@@ -102,7 +103,7 @@ export default function Form() {
                 />
                 {errorState.password.length > 0 ?( <p className="error">{errorState.password}</p>) : null}
             </label>
-            <label htmlFor="terms">
+            <label htmlFor="terms" className="terms">
                 I have read the Terms and Conditions
                 <input 
                     type="checkbox"
@@ -112,8 +113,9 @@ export default function Form() {
                     onChange={changeHandler}
                 />
             </label>
-            <pre>{JSON.stringify(users, null, 2)}</pre>
             <button>Submit</button>
+            <pre>{JSON.stringify(users, null, 2)}</pre>
+
         </form>
     )
 
