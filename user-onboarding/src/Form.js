@@ -11,30 +11,20 @@ const formSchema = yup.object().shape({
 });
 
 
-const Form = props => {
+export default function Form() {
 
-    const [formState, setFormState] = useState({
+    const initialState = {
         name: "",
         email: "",
         password: "",
-        terms: false
-    });
+        terms: "",
+    };
 
-    const [errorState, setErrorState] = useState({
-        name: "",
-        email: "",
-        password: "",
-        terms: ""
-    });
+    const [formState, setFormState] = useState(initialState);
+    const [errorState, setErrorState] = useState(initialState);
 
 
-    const [user, setUser] = useState([
-        {
-        id: "",
-        name: "",
-        email: ""
-        }
-      ])
+    const [users, setUsers] = useState([]);
 
 
     const validate = e => {
@@ -63,16 +53,19 @@ const Form = props => {
         setFormState({ ...formState, [e.target.name]: value })
     }
 
-    const formSubmit = e => {
+    const formSubmit = (e) => {
         e.preventDefault();
-        console.log("form submitted!")
-        props.addUser(user);
-        setUser({name: "", email: ""});
+        console.log("form submitted!");
 
         axios
             .post("https://reqres.in/api/users", formState)
-            .then(response => console.log(response))
-            .catch(err => console.log(err));
+            .then((response) => {
+                setUsers([...users, response.data]);
+                setFormState(initialState);
+    
+            })
+            .catch((err) => console.log(err.response));
+
     }
 
     return (
@@ -119,11 +112,10 @@ const Form = props => {
                     onChange={changeHandler}
                 />
             </label>
+            <pre>{JSON.stringify(users, null, 2)}</pre>
             <button>Submit</button>
         </form>
     )
 
 
 }
-
-export default Form;
