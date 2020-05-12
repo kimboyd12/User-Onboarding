@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as yup from "yup";
 import axios from "axios";
 
 
 const formSchema = yup.object().shape({
-    name: yup.string().required("Please enter your name"),
-    email: yup.string().email("Must be a valid email address").required("Please enter your email address"),
-    password: yup.string().required("Please enter your password"),
-    terms: yup.boolean().oneOf([true], "Please agree to the Terms and Conditions")
+    name: yup.string().required(),
+    email: yup.string().email("Must be a valid email address").required(),
+    password: yup.string().required(),
+    role: yup.string(),
+    terms: yup.boolean().oneOf([true])
 });
 
 
@@ -17,11 +18,20 @@ export default function Form() {
         name: "",
         email: "",
         password: "",
-        terms: "",
+        role: "",
+        terms: ""
     };
 
     const [formState, setFormState] = useState(initialState);
     const [errorState, setErrorState] = useState(initialState);
+
+    const [buttonDisabled, setButtonDisabled] = useState(true);
+
+    useEffect(() => {
+        formSchema.isValid(formState).then(valid => {
+            setButtonDisabled(!valid);
+        });
+    }, [formState]);
 
 
     const [users, setUsers] = useState([]);
@@ -80,6 +90,7 @@ export default function Form() {
                     value={formState.name}
                     onChange={changeHandler}
                 />
+               {errorState.name.length > 0 ?( <p className="error">{errorState.name}</p>) : null}
             </label>
             <label htmlFor="email">
                 Email:
@@ -101,7 +112,23 @@ export default function Form() {
                     value={formState.password}
                     onChange={changeHandler}
                 />
-                {errorState.password.length > 0 ?( <p className="error">{errorState.password}</p>) : null}
+                {errorState.password.length > 0 ? ( <p className="error">{errorState.password}</p> ) : null}
+            </label>
+            <label htmlFor="role">
+                Role:
+                <select 
+                    id="role"
+                    value={formState.role}
+                    name="role"
+                    onChange={changeHandler}
+                >
+                    <option value="" disable selected>Select your role...</option>
+                    <option value="frontend">Front End Developer</option>
+                    <option value="backend">Back End Developer</option>
+                    <option value="ux">User Experience Designer</option>
+                    <option value="ios">iOS Developer</option>
+                </select>
+
             </label>
             <label htmlFor="terms" className="terms">
                 I have read the Terms and Conditions
@@ -113,9 +140,8 @@ export default function Form() {
                     onChange={changeHandler}
                 />
             </label>
-            <button>Submit</button>
+            <button disabled={buttonDisabled}>Submit</button>
             <pre>{JSON.stringify(users, null, 2)}</pre>
-
         </form>
     )
 
