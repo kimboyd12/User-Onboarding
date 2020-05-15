@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import * as yup from "yup";
 import axios from "axios";
 
-
+// validation schema aka what we want required
 const formSchema = yup.object().shape({
     name: yup.string().required(),
     email: yup.string().email("Must be a valid email address").required(),
@@ -14,6 +14,7 @@ const formSchema = yup.object().shape({
 
 export default function Form() {
 
+    // made an initial state so that it was easier to reuse in code
     const initialState = {
         name: "",
         email: "",
@@ -25,6 +26,7 @@ export default function Form() {
     const [formState, setFormState] = useState(initialState);
     const [errorState, setErrorState] = useState(initialState);
 
+    // state for button to not allow submit unless form is complete
     const [buttonDisabled, setButtonDisabled] = useState(true);
 
     useEffect(() => {
@@ -33,8 +35,9 @@ export default function Form() {
         });
     }, [formState]);
 
-
+    // state for user list array, initialized with empty array 
     const [users, setUsers] = useState([]);
+
 
 
     const validate = e => {
@@ -55,6 +58,7 @@ export default function Form() {
             });
     };
 
+
     const changeHandler = e => {
         e.persist();
         validate(e);
@@ -63,6 +67,7 @@ export default function Form() {
         setFormState({ ...formState, [e.target.name]: value })
     }
 
+    // submit handler / will populate user list array with users upon button submit
     const formSubmit = (e) => {
         e.preventDefault();
         console.log("form submitted!");
@@ -141,6 +146,7 @@ export default function Form() {
                 />
             </label>
             <button disabled={buttonDisabled}>Submit</button>
+            {/* JSON stringify displays rendered user list to screen */}
             <pre>{JSON.stringify(users, null, 2)}</pre>
         </form>
     )
